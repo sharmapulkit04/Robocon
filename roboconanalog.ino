@@ -13,7 +13,7 @@
 
 const int junctionPulse=2;
 const int analogPin =A0;
-const int motorSpeed=60
+const int motorSpeed=60;
 void setup() {
   
   
@@ -57,7 +57,7 @@ int readVal,positionVal;
   positionVal = ((float)readVal/921)*70;
   int error = positionVal-35;
   int leftMotorSpeed=motorSpeed - error;
-  int rightMotorSpeed=motorSpeed + error;;
+  int rightMotorSpeed=motorSpeed + error;
  
 move(leftMotorSpeed,rightMotorSpeed);
 
