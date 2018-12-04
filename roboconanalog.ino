@@ -13,10 +13,10 @@
 
 const int junctionPulse=2;
 const int analogPin =A0;
-
+const int motorSpeed=60
 void setup() {
   
-  Serial.begin(9600);
+  
   pinMode(junctionPulse,INPUT);
   
  
@@ -55,39 +55,36 @@ int readVal,positionVal;
 
   // Convert voltage level into line position value
   positionVal = ((float)readVal/921)*70;
-
-  // Line at left when 0 - 18, move left
-  if(positionVal >= 45)
-  moveLeft(positionVal);
-
-  // Line at middle when 19 - 52, move forward
-  else if(positionVal <= 45&&positionVal>=25)
-  moveForward();
-
-  // Line at right when 53 - 70, move right
-  else if(positionVal <= 25)
-  moveRight(positionVal);
-
+  int error = positionVal-35;
+  int leftMotorSpeed=motorSpeed - error;
+  int rightMotorSpeed=motorSpeed + error;;
+ 
+move(leftMotorSpeed,rightMotorSpeed);
 
 }
 
-void moveLeft(int pos) {
-  analogWrite(fpwm1,60);
-  analogWrite(bpwm2,60-2*(25-pos));
+
+
+
+void move(int leftMotor,int rightMotor) {
+  
+  if(leftMotor>0&&rightMotor>0){
+  analogWrite(fpwm1,leftMotor);
+  analogWrite(bpwm2,rightMotor);
+    
+  }
+  if(leftMotor<0){
+  analogWrite(fpwm1,0);
+  analogWrite(bpwm2,rightMotor);
+  
+  }
+  if(rightMotor<0){
+  analogWrite(fpwm1,leftMotor);
+  analogWrite(bpwm2,0);
+  }
+  
+  
 }
-
-
-void moveRight(int pos) {
-  analogWrite(fpwm1,60-2*(pos-45));
-  analogWrite(bpwm2,60);
-}
-
-
-void moveForward() {
-  analogWrite(fpwm1,60);
-  analogWrite(bpwm2,60);
-}
-
 
 void brk(){
   
