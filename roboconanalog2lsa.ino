@@ -67,10 +67,7 @@ digitalWrite(gnd5,LOW);
 void loop() {
 
  Serial.begin(9600);
- pinMode(fbrk1,LOW);
- pinMode(bbrk2,LOW);
-pinMode(fbrk2,LOW);
- pinMode(bbrk1,LOW);
+ 
 
 
 int readVal0,readVal1, positionVal0,positionVal1;
@@ -84,6 +81,8 @@ int readVal0,readVal1, positionVal0,positionVal1;
   
  
  if(positionVal0>5){
+   pinMode(fbrk1,LOW);
+ pinMode(bbrk2,LOW);
    int error = Kp*(positionVal0-35);
   int leftMotorSpeed=motorSpeed - error;
   int rightMotorSpeed=motorSpeed + error;
@@ -94,6 +93,9 @@ move(leftMotorSpeed,rightMotorSpeed,fpwm1,bpwm2);
 
 
 if(positionVal0<5&&positionVal0>5){
+  pinMode(fbrk2,LOW);
+ pinMode(bbrk1,LOW);
+
    int error = positionVal1-35;
   int leftMotorSpeed=motorSpeed - error;
   int rightMotorSpeed=motorSpeed + error;
